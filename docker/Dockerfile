@@ -22,6 +22,7 @@ RUN apt-get update && \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*  \
   && apt-get autoclean && apt-get autoremove
 
+EXPOSE 8000/tcp
 # Heathcheck is required to return 0 or 1
 HEALTHCHECK CMD curl -f http://localhost:8000/ || exit 1
 
@@ -33,15 +34,12 @@ RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/inst
 
 COPY pyproject.toml ./
 
-# Allow installing dev dependencies to run tests
-ARG INSTALL_DEV=false
 RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
+
 
 CMD mkdir -p /workspace
 WORKDIR /workspace
 
-COPY ./Makefile ./
 COPY ./app_python ./app_python
-COPY ./tests ./tests
 
 CMD poetry run uvicorn app_python.main:app --host 0.0.0.0
