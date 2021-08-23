@@ -16,11 +16,12 @@ ENV LANG=C.UTF-8 \
   PATH="${PATH}:/root/.poetry/bin"
 
 # Install curl to download poetry in future and remove all cache
-RUN apt-get update && \
-  apt-get install -y --no-install-recommends \
-  curl \
+# Use update because by default apt does not see curl
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  curl=7.64.0-4+deb10u2 \
   && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*  \
-  && apt-get autoclean && apt-get autoremove
+  && apt-get autoclean && apt-get autoremove && \
+  adduser --disabled-password --shell /bin/sh --home /home/moscow_clock moscow_clock
 
 EXPOSE 8000/tcp
 # Heathcheck is required to return 0 or 1
@@ -36,10 +37,9 @@ COPY pyproject.toml ./
 
 RUN bash -c "if [ $INSTALL_DEV == 'true' ] ; then poetry install --no-root ; else poetry install --no-root --no-dev ; fi"
 
+USER moscow_clock
+WORKDIR /home/moscow_clock
 
-CMD mkdir -p /workspace
-WORKDIR /workspace
-
-COPY ./app_python ./app_python
+COPY --chown=moscow_clock:moscow_clock ./app_python ./app_python
 
 CMD poetry run uvicorn app_python.main:app --host 0.0.0.0

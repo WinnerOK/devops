@@ -10,3 +10,9 @@
   in order to improve caching for builds.
 
 - Take advantage over healthchecks for an application to see current status
+
+- Create custom user instead of root
+
+- Be specific with versions on used dependencies
+
+- Do not create extra layers and run cleanups
