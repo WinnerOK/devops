@@ -11,6 +11,23 @@ The app shows datetime in Moscow timezone (GMT+3)
 App runs on port `8000`
 Swager is available at `/docs`
 
+## Testing
+
+The code is tested using `pytest` framework.
+Tests are located at `/tests` folder
+
+Run tests executing either:
+
+```bash
+poetry run pytest
+```
+
+or
+
+```bash
+make test
+```
+
 ## Start coding
 
 ### Initialize your code
