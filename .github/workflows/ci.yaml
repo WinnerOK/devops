@@ -5,6 +5,8 @@ on:
     branches:
       - main
       - lab3/ci  # for tests, remove later
+      -
+permissions: read-all
 
 env:
   IMAGE: app_python
