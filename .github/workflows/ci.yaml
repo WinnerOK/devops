@@ -1,0 +1,58 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - lab3/ci  # for tests, remove later
+
+env:
+  IMAGE: app_python
+  REGISTRY: winnerokay
+
+jobs:
+  lint_test:
+    name: Linting and Testing
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+
+      - name: Restore cache
+        uses: actions/cache@v2.1.6
+        with:
+          path: |
+            app_python/__pycache__
+            app_python/.pytest_cache
+          key: ${{ runner.os }}-${{ hashFiles('app_python/') }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v2.2.2
+        with:
+          python-version: 3.9
+
+      - name: Setup Poetry
+        uses: abatilo/actions-poetry@v2.1.0
+        with:
+          poetry-version: 1.1.8
+
+      - name: Install dependencies
+        run: poetry install
+
+      - name: Typing validation
+        run: poetry run mypy --config-file pyproject.toml ./
+
+      - name: Test
+        run: poetry run pytest
+
+      - name: Format checking
+        run: |
+          poetry run isort --diff --check-only --settings-path pyproject.toml ./
+          poetry run black --diff --check --config pyproject.toml ./
+          poetry run darglint --verbosity 2 app_python tests
+
+      - name: Safety checks
+        run: |
+          poetry check
+          poetry run safety check --full-report
+          poetry run bandit -ll --recursive app_python
