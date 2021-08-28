@@ -37,7 +37,9 @@ jobs:
           poetry-version: 1.1.8
 
       - name: Install dependencies
-        run: poetry install
+        run: |
+          poetry install
+          poetry run mypy --install-types --non-interactive ./
 
       - name: Typing validation
         run: poetry run mypy --config-file pyproject.toml ./
