@@ -1,0 +1,5 @@
+# Global ownership of repo
+*       @WinnerOK
+
+# To make sure this rule won't be overwritten
+.github @WinnerOK
