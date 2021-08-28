@@ -3,6 +3,11 @@ on:
   push:
     tags:
       - lab-*
+
+permissions:
+  contents: read
+  deployments: write
+
 jobs:
   release:
     name: Create release
