@@ -1,8 +1,12 @@
-terraform {
-  required_providers {
-    virtualbox = {
-      source  = "terra-farm/virtualbox"
-      version = "0.2.1-alpha.1"
-    }
-  }
+
+//
+//provider "virtualbox" {
+//  # Configuration options
+//}
+
+
+provider "aws" {
+  region     = "us-east-2"
+  access_key = var.aws_access_key_id
+  secret_key = var.aws_secret_access_key
 }
