@@ -21,3 +21,13 @@
   in order to prevent code injection.
 
 - Utilize Github Secrets for sensitive data such as credentials.
+
+## Jenkins
+
+Since we do run Jenkins inside docker and run agent as docker,
+we need docker-in-docker (dind) installation. One idea is to just mount a docker socket.
+Another approach is to run dind in a separate container as described in the following [docker-compose file](https://gist.github.com/adelmofilho/5a30a87eaf1cd4a03052f37b516d6714)
+
+- Some tasks in jenkins can be executed in parallel, take advantage of it you have independent steps
+  Yet be very careful in order not to create race conditions or not to make uncotrolled requests to resources with exclusive access.
+  [Throttle concurrent build](https://wiki.jenkins.io/display/JENKINS/Throttle+Concurrent+Builds+Plugin) plugin may help to control concurrent builds.
