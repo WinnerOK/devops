@@ -3,7 +3,6 @@
 I was not able to run terraform under
 the only currently available virtualbox provider [terra-farm/virtualbox](https://registry.terraform.io/providers/terra-farm/virtualbox/latest)
 since the example provided at official documentation fails with not really descriptive error.
-As a replacement I created terraform setup to run an AWS EC2 instance.
 
 ```
 virtualbox_vm.node[0]: Creating...
@@ -21,6 +20,7 @@ virtualbox_vm.node[0]: Still creating... [1m30s elapsed]
 ```
 
 Running `terraform apply` with logging enabled does not reveal a particular problem:
+As a replacement I provided simple Vagrantfile to run a VBox VM.
 
 ```
 2021-08-30T13:22:52.924+0300 [WARN]  Provider "registry.terraform.io/terra-farm/virtualbox" produced an invalid plan for virtualbox_vm.node[0], but we are tolerating it because it is using the legacy plugin SDK.
@@ -46,7 +46,6 @@ Running `terraform apply` with logging enabled does not reveal a particular prob
 2021-08-30T13:23:43.959+0300 [TRACE] statemgr.Filesystem: removing lock metadata file .terraform.tfstate.lock.info
 2021-08-30T13:23:43.960+0300 [TRACE] statemgr.Filesystem: unlocking terraform.tfstate using fcntl flock
 2021-08-30T13:23:43.961+0300 [DEBUG] provider.stdio: received EOF, stopping recv loop: err="rpc error: code = Unavailable desc = transport is closing"
-
 ```
 
 ## Terraform practices

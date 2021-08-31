@@ -1,10 +1,3 @@
-
-//
-//provider "virtualbox" {
-//  # Configuration options
-//}
-
-
 provider "aws" {
   region     = "us-east-2"
   access_key = var.aws_access_key_id
