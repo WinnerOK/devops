@@ -98,7 +98,7 @@ jobs:
       - name: Set variables
         run: |
           short_sha=$(git rev-parse --short "${{github.sha}}")
-          echo ::set-output name=SHORT_SHA::$(short_sha)
+          echo ::set-output name=SHORT_SHA::${short_sha}
           git_ref=${{github.ref}}
           echo ::set-output name=BRANCH::${git_ref##*/}
         id: vars
