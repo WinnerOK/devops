@@ -38,7 +38,7 @@ repos:
     hooks:
       - id: test
         name: pytest
-        entry: poetry run pytest --config pyproject.toml
+        entry: poetry run pytest -c pyproject.toml .
         types: [ python ]
         language: system
 

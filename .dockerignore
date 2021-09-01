@@ -37,6 +37,8 @@ venv
 .LSOverride
 ._*
 
+IaC/
+
 .editorconfig
 Makefile
 *.md
