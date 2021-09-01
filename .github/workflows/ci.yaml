@@ -100,8 +100,11 @@ jobs:
         with:
           file: docker/Dockerfile
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache,mode=max
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}:${GITHUB_REF##*/}
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}:$(git rev-parse --short "$GITHUB_SHA")
+          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${GITHUB_REF##*/}
+          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${GITHUB_REF##*/},mode=max
           build-args: |
             INSTALL_DEV='false'
