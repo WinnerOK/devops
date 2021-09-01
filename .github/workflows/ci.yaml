@@ -96,7 +96,7 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: debug
-        run: echo ${{github.head_ref}} $(git rev-parse --short "${{github.sha}}") ${{github.sha}}
+        run: echo $(${{github.ref}}#refs/heads/) $(git rev-parse --short "${{github.sha}}")
 
       - name: Build and push docker image
         uses: docker/build-push-action@v2.7.0
