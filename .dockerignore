@@ -38,3 +38,7 @@ venv
 ._*
 
 IaC/
+
+.editorconfig
+Makefile
+*.md

@@ -1,0 +1,20 @@
+name: release
+on:
+  push:
+    tags:
+      - lab-*
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create github release
+        uses: ncipollo/release-action@v1.8.8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          body: "Commit link for moodle: `https://github.com/${{ github.repository }}/commit/${{ github.sha }}`"
+          allowUpdates: true
