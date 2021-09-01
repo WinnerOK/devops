@@ -95,8 +95,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Set variables
+        run: |
+          short_sha=$(git rev-parse --short "${{github.sha}}")
+          echo '::set-output name=SHORT_SHA::short_sha'
+        id: vars
+
       - name: debug
-        run: echo $(${{github.ref}}#refs/heads/) $(git rev-parse --short "${{github.sha}}")
+        run: echo ${${{github.ref}}##*/} ${{steps.vars.outputs.SHORT_SHA}}
 
       - name: Build and push docker image
         uses: docker/build-push-action@v2.7.0
@@ -105,7 +111,7 @@ jobs:
           push: true
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
-            ${{ env.REGISTRY }}/${{ env.IMAGE }}:$(git rev-parse --short "${{github.sha}}")
+            ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{steps.vars.outputs.SHORT_SHA}}
 #            ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{github.ref##*/}}
           cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${GITHUB_REF##*/}
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${GITHUB_REF##*/},mode=max
