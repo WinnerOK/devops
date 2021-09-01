@@ -36,3 +36,7 @@ venv
 .AppleDouble
 .LSOverride
 ._*
+
+.editorconfig
+Makefile
+*.md
