@@ -2,9 +2,6 @@ name: ci
 on:
   pull_request:
   push:
-    branches:
-      - main
-      - lab3/ci  # for tests, remove later
 
 permissions: read-all
 
@@ -96,15 +93,12 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Set variables
+        id: vars
         run: |
           short_sha=$(git rev-parse --short "${{github.sha}}")
           echo ::set-output name=SHORT_SHA::${short_sha}
           git_ref=${{github.ref}}
           echo ::set-output name=BRANCH::${git_ref##*/}
-        id: vars
-
-      - name: debug
-        run: echo ${{steps.vars.outputs.BRANCH}} ${{steps.vars.outputs.SHORT_SHA}}
 
       - name: Build and push docker image
         uses: docker/build-push-action@v2.7.0
