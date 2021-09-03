@@ -42,3 +42,4 @@ IaC/
 .editorconfig
 Makefile
 *.md
+ansible/

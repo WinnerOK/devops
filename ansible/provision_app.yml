@@ -9,3 +9,4 @@
       vars:
         docker_users:
           - "{{ username }}"
+    - role: deploy-app

@@ -1,0 +1,20 @@
+---
+- name: Ensure Pip is installed.
+  package:
+    name: "python3-pip"
+    state: present
+
+- name: Install docker library
+  pip:
+    name: docker==5.0.2
+    state: present
+
+- name: Run container
+  community.docker.docker_container:
+    name: my_app
+    image: "winnerokay/app_python:latest"
+    state: started
+    recreate: yes
+    container_default_behavior: compatibility
+    ports:
+      - 8000:8000
