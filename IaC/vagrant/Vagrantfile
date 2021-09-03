@@ -13,7 +13,8 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible" do |ansible|
     ansible.playbook = "../../ansible/provision_app.yml"
     ansible.extra_vars = {
-      username: "vagrant"
+      username: "vagrant",
+      python_app_tag: "terraform"
     }
   end
 

@@ -13,9 +13,9 @@
 
 - name: Ensure directory for application
   file:
-      path: /opt/python_app/
-      state: directory
-      mode: 0755
+    path: /opt/python_app/
+    state: directory
+    mode: 0755
 
 - name: Copy docker-compose
   copy:
@@ -25,9 +25,9 @@
 
 - name: Run docker-compose
   community.docker.docker_compose:
-    pull: yes
+    pull: true
     recreate: always
     state: present
     project_src: /opt/python_app/
   environment:
-    TAG: ci
+    TAG: "{{ python_app_tag }}"
