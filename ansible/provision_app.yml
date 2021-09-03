@@ -5,7 +5,7 @@
     username: ubuntu
 
   roles:
-    - role: docker-install-ubuntu20
+    - role: ubuntu20_docker_install
       vars:
         docker_users:
           - "{{ username }}"
