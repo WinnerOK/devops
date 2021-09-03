@@ -4,17 +4,30 @@
     name: "python3-pip"
     state: present
 
-- name: Install docker library
+- name: Install docker libraries
   pip:
-    name: docker==5.0.2
+    name:
+      - docker==5.0.2
+      - docker-compose==1.29.2
     state: present
 
-- name: Run container
-  community.docker.docker_container:
-    name: my_app
-    image: "winnerokay/app_python:latest"
-    state: started
-    recreate: yes
-    container_default_behavior: compatibility
-    ports:
-      - 8000:8000
+- name: Ensure directory for application
+  file:
+      path: /opt/python_app/
+      state: directory
+      mode: 0755
+
+- name: Copy docker-compose
+  copy:
+    src: ../../../../docker/docker-compose.yaml
+    dest: /opt/python_app/docker-compose.yaml
+    mode: u=rw,g=r,o=r
+
+- name: Run docker-compose
+  community.docker.docker_compose:
+    pull: yes
+    recreate: always
+    state: present
+    project_src: /opt/python_app/
+  environment:
+    TAG: ci
