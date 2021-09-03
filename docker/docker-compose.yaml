@@ -3,4 +3,4 @@ services:
   python_app:
     image: winnerokay/app_python:${TAG:-latest}
     ports:
-      - "8000:8000"
+      - "${OUTER_PORT:-8000}:8000"

@@ -31,3 +31,4 @@
     project_src: /opt/python_app/
   environment:
     TAG: "{{ python_app_tag }}"
+    OUTER_PORT: "{{python_app_outer_port}}"
