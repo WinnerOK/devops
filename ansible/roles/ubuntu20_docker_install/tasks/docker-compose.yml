@@ -1,0 +1,11 @@
+---
+- name: Delete existing docker-compose version.
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+
+- name: Install Docker Compose.
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755

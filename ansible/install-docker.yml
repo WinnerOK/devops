@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  vars:
+    username: ubuntu
+
+  roles:
+    - role: ubuntu20_docker_install
+      vars:
+        docker_users:
+          - "{{ username }}"
