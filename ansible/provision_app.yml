@@ -1,0 +1,15 @@
+---
+- hosts: all
+  become: true
+  vars:
+    username: ubuntu
+    python_app_tag: latest
+
+  roles:
+    - role: ubuntu20_docker_install
+      vars:
+        docker_users:
+          - "{{ username }}"
+    - role: deploy_app
+      vars:
+        python_app_tag: "{{ python_app_tag }}"

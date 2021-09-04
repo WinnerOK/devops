@@ -11,6 +11,32 @@ The app shows datetime in Moscow timezone (GMT+3)
 App runs on port `8000`
 Swager is available at `/docs`
 
+## Deployment
+
+1. Fill in `IaC/terraform/variables.tfvars`
+   referencing `IaC/terraform/example.tfvars`
+1. Install ansible dependencies
+   ```
+   ansible-galaxy install -r ansible/requirements.yml
+   ```
+1. Run terraform:
+
+```
+terraform plan
+```
+
+If everything goes as expected, run
+
+```
+terraform apply
+```
+
+1. Run ansible:
+
+```
+ansible-palybook 
+```
+
 ## Testing
 
 The code is tested using `pytest` framework.
