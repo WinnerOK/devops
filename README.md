@@ -8,34 +8,44 @@ with some modifications
 
 The app shows datetime in Moscow timezone (GMT+3)
 
-App runs on port `8000`
-Swager is available at `/docs`
+- App runs on port `8000`
+- Swagger is available at `/docs`
+- Application metrics are available at `/metrics`
 
 ## Deployment
 
+1. Fill `~/.aws/credentials` in the following format (in order for dynamic inventory to work properly):
+   ```
+   [default]
+   aws_access_key_id=<your aws key id>
+   aws_secret_access_key=<your aws access key>
+   ```
 1. Fill in `IaC/terraform/variables.tfvars`
-   referencing `IaC/terraform/example.tfvars`
+   as `IaC/terraform/example.tfvars`
+1. Go to [IaC/terraform](./IaC/terraform) folder
+1. Run terraform:
+   ```
+   terraform plan
+   ```
+   If everything goes as expected, run
+   ```
+   terraform apply
+   ```
+1. Go to [ansible](./ansible) folder:
 1. Install ansible dependencies
    ```
-   ansible-galaxy install -r ansible/requirements.yml
+   pip3 install -r requirements.txt
+   ansible-galaxy install -r requirements.yml
    ```
-1. Run terraform:
-
-```
-terraform plan
-```
-
-If everything goes as expected, run
-
-```
-terraform apply
-```
-
+1. Verify the dynamic inventory
+   ```
+   ansible-inventory -i ./inventory --graph
+   ```
 1. Run ansible:
-
-```
-ansible-palybook 
-```
+   ```
+   ansible-playbook -i ./inventory --private-key <path to your private key> provision_app.yml
+   ```
+   In case needed, you can overwrite ansible varibles from command line
 
 ## Testing
 

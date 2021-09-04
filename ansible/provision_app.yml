@@ -1,15 +1,15 @@
 ---
 - hosts: all
-  become: true
+  remote_user: ubuntu
   vars:
-    username: ubuntu
-    python_app_tag: latest
+    python_app_docker_tag: latest
 
   roles:
     - role: ubuntu20_docker_install
+      become: true
       vars:
         docker_users:
-          - "{{ username }}"
+          - "{{ ansible_user_id }}"
     - role: deploy_app
       vars:
-        python_app_tag: "{{ python_app_tag }}"
+        python_app_tag: "{{ python_app_docker_tag }}"
