@@ -1,18 +1,4 @@
 ---
-- name: Ensure Pip is installed.
-  become: true
-  package:
-    name: "python3-pip"
-    state: present
-
-- name: Install docker libraries
-  pip:
-    name:
-      - docker==5.0.2
-      - docker-compose==1.29.2
-    state: present
-
-
 - name: Ensure directory for application
   become: true
   file:
@@ -21,13 +7,20 @@
     state: directory
     mode: 0755
 
+#- name: Copy docker-compose
+#  copy:
+#    src: ../../../../docker/docker-compose.yaml
+#    dest: /opt/python_app/docker-compose.yaml
+#    mode: u=rw,g=r,o=r
+
 - name: Copy docker-compose
-  copy:
-    src: ../../../../docker/docker-compose.yaml
+  template:
+    src: template/docker-compose.yml.j2
     dest: /opt/python_app/docker-compose.yaml
     mode: u=rw,g=r,o=r
 
 - name: Run docker-compose
+  become: true
   community.docker.docker_compose:
     pull: true
     recreate: always
