@@ -1,3 +1,4 @@
 python_app_image: winnerokay/app_python
 python_app_tag: latest
 python_app_outer_port: 8000
+python_app_folder: /opt/python_app

@@ -3,20 +3,14 @@
   become: true
   file:
     owner: "{{ ansible_user_id }}"
-    path: /opt/python_app/
+    path: "{{ python_app_folder }}"
     state: directory
     mode: 0755
-
-#- name: Copy docker-compose
-#  copy:
-#    src: ../../../../docker/docker-compose.yaml
-#    dest: /opt/python_app/docker-compose.yaml
-#    mode: u=rw,g=r,o=r
 
 - name: Copy docker-compose
   template:
     src: template/docker-compose.yml.j2
-    dest: /opt/python_app/docker-compose.yaml
+    dest: "{{ python_app_folder }}/docker-compose.yaml"
     mode: u=rw,g=r,o=r
 
 - name: Run docker-compose
@@ -25,7 +19,4 @@
     pull: true
     recreate: always
     state: present
-    project_src: /opt/python_app/
-  environment:
-    TAG: "{{ python_app_tag }}"
-    OUTER_PORT: "{{python_app_outer_port}}"
+    project_src: "{{ python_app_folder }}"
