@@ -12,6 +12,18 @@ The app shows datetime in Moscow timezone (GMT+3)
 - Swagger is available at `/docs`
 - Application metrics are available at `/metrics`
 
+## Running docker image
+Usage of Makefile to build docker container is specified at [Makefile usage](https://github.com/WinnerOK/devops/tree/main#makefile-usage) section of this readme. Subsection 8.
+
+For more specific information refer [README.md](https://github.com/WinnerOK/devops/blob/main/docker/README.md) inside docker folder.
+
+Running a container from pre-built image:
+```
+docker run -it  -p 8000:8000 -d winnerokay/app_python
+```
+
+Checkout available tags at [dockerhub](https://hub.docker.com/repository/docker/winnerokay/app_python)
+
 ## Deployment
 
 1. Fill `~/.aws/credentials` in the following format (in order for dynamic inventory to work properly):
@@ -84,7 +96,7 @@ make pre-commit-install
 
 ### Makefile usage
 
-[`Makefile`](https://github.com/WinnerOK/app_python/blob/master/Makefile) contains often used commands
+[`Makefile`](https://github.com/WinnerOK/devops/blob/main/Makefile) contains often used commands
 
 <details>
 <summary>1. Download and remove Poetry</summary>
@@ -210,7 +222,7 @@ Remove docker image with
 make docker-remove
 ```
 
-Docker [readme](https://github.com/WinnerOK/app_python/tree/master/docker).
+Docker [readme](https://github.com/WinnerOK/devops/blob/main/docker/README.md).
 
 </p>
 </details>
