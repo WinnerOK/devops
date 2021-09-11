@@ -1,4 +1,4 @@
-version: '3.9'
+version: '2.4'
 
 x-logging:
   &default-logging
@@ -8,12 +8,20 @@ x-logging:
     max-file: '10'
     tag: "{{.ImageName}}|{{.Name}}"
 
+x-resources:
+  &default-resources
+  cpus: 0.5
+  mem_limit: 128M
+
+
 x-defaults:
   &defaults
   logging: *default-logging
   restart: unless-stopped
   networks:
     - loki
+  <<: *default-resources
+
 
 networks:
   loki:
@@ -22,9 +30,9 @@ volumes:
   grafana-data:
   loki-data:
   promtail-data:
+  prometheus-data:
 
 services:
-
   grafana:
     image: grafana/grafana:8.1.3
     ports:
@@ -49,4 +57,17 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./promtail/config.yml:/etc/promtail/config.yml:ro
       - promtail-data:/var/lib/promtail/positions
+    <<: *defaults
+
+  prometheus:
+    image: prom/prometheus:v2.29.2
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    extra_hosts:
+      # to access docker metrics and application metrics
+      # without having to add them it in common network
+      - "host.docker.internal:host-gateway"
     <<: *defaults
