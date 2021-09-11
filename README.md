@@ -13,11 +13,13 @@ The app shows datetime in Moscow timezone (GMT+3)
 - Application metrics are available at `/metrics`
 
 ## Running docker image
+
 Usage of Makefile to build docker container is specified at [Makefile usage](https://github.com/WinnerOK/devops/tree/main#makefile-usage) section of this readme. Subsection 8.
 
 For more specific information refer [README.md](https://github.com/WinnerOK/devops/blob/main/docker/README.md) inside docker folder.
 
 Running a container from pre-built image:
+
 ```
 docker run -it  -p 8000:8000 -d winnerokay/app_python
 ```
@@ -75,6 +77,13 @@ or
 ```bash
 make test
 ```
+
+## Monitoring stack
+
+The repository contains a Loki + Promtail + Grafana + Prometheus as monitoring stack.
+
+Monitoring currently inspects itself and the application running at `0.0.0.0:8000`.
+You can check out the stack in [monitoring folder](./monitoring), where you can also find the [demonstration](./monitoring/LOGGING.md)
 
 ## Start coding
 
