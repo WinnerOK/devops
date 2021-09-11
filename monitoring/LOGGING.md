@@ -65,3 +65,4 @@ Dashboards:
   there is no good dashboard for metric exporter that I used
   ([prometheus-fastapi-instrumentator](https://github.com/trallnag/prometheus-fastapi-instrumentator)),
   so I just rendered the amount of succesfull requests per second for each endpoint
+  ![](./images/monitoring/app_python_dashboard.png)
