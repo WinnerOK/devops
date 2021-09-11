@@ -109,7 +109,9 @@ jobs:
             ${{ env.REGISTRY }}/${{ env.IMAGE }}:latest
             ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{steps.vars.outputs.SHORT_SHA}}
             ${{ env.REGISTRY }}/${{ env.IMAGE }}:${{steps.vars.outputs.BRANCH}}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${{steps.vars.outputs.BRANCH}}
+          cache-from: |
+            type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${{steps.vars.outputs.BRANCH}}
+            type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-main
           cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE }}:buildcache-${{steps.vars.outputs.BRANCH}},mode=max
           build-args: |
             INSTALL_DEV='false'
