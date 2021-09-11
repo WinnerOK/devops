@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 
 x-logging:
   &default-logging
@@ -8,9 +8,25 @@ x-logging:
     max-file: '10'
     tag: "{{.ImageName}}|{{.Name}}"
 
+networks:
+  loki:
+
+volumes:
+  grafana-data:
+
 services:
   python_app:
     image: winnerokay/app_python:${TAG:-latest}
     ports:
       - "${OUTER_PORT:-8000}:8000"
     logging: *default-logging
+
+  grafana:
+    image: grafana/grafana:8.1.3
+    restart: always
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    networks:
+      - loki
