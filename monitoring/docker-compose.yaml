@@ -12,6 +12,8 @@ x-defaults:
   &defaults
   logging: *default-logging
   restart: unless-stopped
+  networks:
+    - loki
 
 networks:
   loki:
