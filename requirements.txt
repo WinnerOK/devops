@@ -1,4 +1,0 @@
-fastapi==0.68.0; python_version >= "3.6"
-pydantic==1.8.2; python_full_version >= "3.6.1" and python_version >= "3.6"
-starlette==0.14.2; python_version >= "3.6"
-typing-extensions==3.10.0.0; python_full_version >= "3.6.1" and python_version >= "3.6"
