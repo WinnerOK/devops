@@ -8,25 +8,43 @@ x-logging:
     max-file: '10'
     tag: "{{.ImageName}}|{{.Name}}"
 
+x-defaults:
+  &defaults
+  logging: *default-logging
+  restart: unless-stopped
+
 networks:
   loki:
 
 volumes:
   grafana-data:
+  loki-data:
+  promtail-data:
 
 services:
-  python_app:
-    image: winnerokay/app_python:${TAG:-latest}
-    ports:
-      - "${OUTER_PORT:-8000}:8000"
-    logging: *default-logging
 
   grafana:
     image: grafana/grafana:8.1.3
-    restart: always
     ports:
       - 3000:3000
     volumes:
       - grafana-data:/var/lib/grafana
-    networks:
-      - loki
+    <<: *defaults
+
+  loki:
+    image: grafana/loki:2.3.0
+    ports:
+      - 3100:3100
+    volumes:
+      - loki-data:/tmp/loki/
+    <<: *defaults
+
+  promtail:
+    image: grafana/promtail:2.3.0
+    ports:
+      - 9080:9080
+    volumes:
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail/config.yml:/etc/promtail/config.yml:ro
+      - promtail-data:/var/lib/promtail/positions
+    <<: *defaults
