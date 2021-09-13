@@ -1,0 +1,31 @@
+global:
+  # probably worth having longer interval at production
+  # it is small for faster testing
+  # The intervals can also be specified on per-job basis
+  scrape_interval: 5s
+  evaluation_interval: 5s
+  scrape_timeout: 3s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets:
+        - "localhost:9090"
+
+  - job_name: "loki"
+    static_configs:
+      - targets:
+        - "loki:3100"
+
+  # googling "prometheus docker" I found that docker can expose its metrics
+  # in prometheus-compatible format. For to enable the feature see the source.
+  # source: https://docs.docker.com/config/daemon/prometheus/
+  - job_name: "docker"
+    static_configs:
+      - targets:
+        - "host.docker.internal:9323"
+
+  - job_name: "python_app"
+    static_configs:
+      - targets:
+        - "host.docker.internal:8000"

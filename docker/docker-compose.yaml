@@ -1,4 +1,4 @@
-version: '3'
+version: '2.4'
 
 x-logging:
   &default-logging
@@ -8,10 +8,16 @@ x-logging:
     max-file: '10'
     tag: "{{.ImageName}}|{{.Name}}"
 
+x-resources:
+  &default-resources
+  cpus: 0.5
+  mem_limit: 128M
+
 x-defaults:
   &defaults
   logging: *default-logging
   restart: unless-stopped
+  <<: *default-resources
 
 networks:
   app:
