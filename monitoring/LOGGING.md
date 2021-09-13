@@ -12,6 +12,7 @@
 
 - Make sure you never compromise sensitive data in logs.
 
+
 ## Screenshots
 
 Promtail targets set up:
@@ -22,6 +23,7 @@ Container discovery at explorer:
 
 Logs from python application:
 ![](./images/logging/python_app_logs.png)
+
 
 # Metrics
 

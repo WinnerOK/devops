@@ -8,6 +8,7 @@ x-logging:
     max-file: '10'
     tag: "{{.ImageName}}|{{.Name}}"
 
+
 x-resources:
   &default-resources
   cpus: 0.5
@@ -21,7 +22,6 @@ x-defaults:
   networks:
     - loki
   <<: *default-resources
-
 
 networks:
   loki:
