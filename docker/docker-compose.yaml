@@ -1,6 +1,26 @@
 version: '3'
+
+x-logging:
+  &default-logging
+  driver: json-file
+  options:
+    max-size: '100m'
+    max-file: '10'
+    tag: "{{.ImageName}}|{{.Name}}"
+
+x-defaults:
+  &defaults
+  logging: *default-logging
+  restart: unless-stopped
+
+networks:
+  app:
+
 services:
   python_app:
     image: winnerokay/app_python:${TAG:-latest}
     ports:
       - "${OUTER_PORT:-8000}:8000"
+    networks:
+      - app
+    <<: *defaults
