@@ -8,6 +8,7 @@ repos:
     rev: v4.0.1
     hooks:
       - id: check-yaml
+        exclude: ^k8s/
       - id: end-of-file-fixer
 
   - repo: local
