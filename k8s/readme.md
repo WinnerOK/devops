@@ -50,8 +50,8 @@ CONTAINER ID   IMAGE                                 COMMAND                  CR
 6a24702eea65   gcr.io/k8s-minikube/kicbase:v0.0.26   "/usr/local/bin/entr…"   About an hour ago   Up About an hour   127.0.0.1:64345->22/tcp, 127.0.0.1:64346->2376/tcp, 127.0.0.1:64348->5000/tcp, 127.0.0.1:64349->8443/tcp, 127.0.0.1:64347->32443/tcp   minikube
 ```
 
-Since I used MacOS host to perform the lab, the docker in running inside a docker VM,
-so external IP is just a ssh tunnel which is justified by `lsof` output:
+Since I used MacOS host to perform the lab, the docker in running inside a docker VM, so external IP is just a ssh
+tunnel which is justified by `lsof` output:
 
 ```
 ❯ sudo lsof -nP -i4TCP:8000 | grep LISTEN
@@ -93,3 +93,16 @@ service/my-app-python-service   LoadBalancer   10.99.65.172   127.0.0.1     8888
 ```
 
 ![](./images/kubectl_result_auto.png)
+
+## Helm deployment
+
+The helm chart is located in [app-python-chart folder](./app-python-chart).
+
+To run use: `helm install chart-name ./app-python-chart`
+
+Report images:
+
+1. Pods and services:
+   ![](./images/helm_result.png)
+1. Dashboard
+   ![](./images/helm_dashboard.png)
