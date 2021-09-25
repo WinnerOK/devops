@@ -11,6 +11,7 @@ The app shows datetime in Moscow timezone (GMT+3)
 - App runs on port `8000`
 - Swagger is available at `/docs`
 - Application metrics are available at `/metrics`
+- Root endpoint access time is recorded and can be retrieved at `/visits`
 
 ## Running docker image
 

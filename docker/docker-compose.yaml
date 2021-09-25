@@ -29,4 +29,6 @@ services:
       - "${OUTER_PORT:-8000}:8000"
     networks:
       - app
+    volumes:
+      - ./media:/home/moscow_clock/media
     <<: *defaults
