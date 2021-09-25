@@ -1,4 +1,6 @@
-from fastapi import FastAPI, Request
+from typing import Awaitable, Callable
+
+from fastapi import FastAPI, Request, Response
 from prometheus_fastapi_instrumentator import Instrumentator
 
 from app_python.config import config
@@ -22,7 +24,10 @@ Instrumentator().instrument(app).expose(
 
 
 @app.middleware("http")
-async def add_process_time_header(request: Request, call_next):
+async def add_process_time_header(
+    request: Request,
+    call_next: Callable[[Request], Awaitable[Response]],
+) -> Response:
     config.visits_file.parent.mkdir(parents=True, exist_ok=True)
     response = await call_next(request)
     if request.url.path == "/":
