@@ -10,6 +10,8 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "k8s_basic"
 
+configPath: "/etc/config"
+
 imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""

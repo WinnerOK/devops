@@ -3,7 +3,7 @@ SHELL := /usr/bin/env bash
 PYTHON := .venv/bin/python
 
 #* Docker variables
-IMAGE := app_python
+IMAGE := winnerokay/app_python
 VERSION := latest
 
 #* Poetry

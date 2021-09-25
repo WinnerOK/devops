@@ -36,6 +36,7 @@ safety = "^1.10.3"
 pytest-freezegun = "^0.4.2"
 mdformat-gfm = "^0.3.2"
 pytest-cov = "^2.12.1"
+pytest-mock = "^3.6.1"
 
 [tool.black]
 # https://github.com/psf/black

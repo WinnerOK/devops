@@ -10,10 +10,13 @@ time_router = APIRouter(
 )
 
 
+def get_current_time_str() -> str:
+    return datetime.now(tz=MOSCOW_TZ).isoformat()
+
+
 @time_router.get("/", response_class=PlainTextResponse)
 def get_time() -> str:
     """
     Show current datetime in Moscow
     """
-    current_time = datetime.now(tz=MOSCOW_TZ).isoformat()
-    return current_time
+    return get_current_time_str()

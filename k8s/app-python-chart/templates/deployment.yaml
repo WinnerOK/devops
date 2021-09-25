@@ -53,6 +53,14 @@ spec:
               port: http
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.configPath }}
+              readOnly: true
+      volumes:
+        - name: config
+          configMap:
+            name: {{ include "app-python-chart.fullname" . }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
