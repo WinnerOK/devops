@@ -8,9 +8,11 @@ image:
   repository: winnerokay/app_python
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "k8s_basic"
+  tag: "738c174"
 
-configPath: "/etc/config"
+volumes:
+  configPath: "/etc/config"
+  visits: "/home/moscow_clock/media"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -39,8 +41,18 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
+  name: app-python
   type: LoadBalancer
   port: 8000
+
+statefulSet:
+  podManagementPolicy: "Parallel"
+  volumeClaimTemplates:
+    spec:
+      accessModes: [ "ReadWriteOnce" ]  # mountable RW to one node only
+      resources:
+        requests:
+          storage: 256M
 
 ingress:
   enabled: false
