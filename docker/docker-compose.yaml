@@ -13,6 +13,14 @@ x-resources:
   cpus: 0.5
   mem_limit: 128M
 
+x-healthcheck:
+  &default-healthcheck
+  test: [ "CMD", "curl", "-f", "http://localhost" ]
+  interval: 10s  # consider greater interval
+  timeout: 10s
+  retries: 3
+  start_period: 40s
+
 x-defaults:
   &defaults
   logging: *default-logging
@@ -31,4 +39,7 @@ services:
       - app
     volumes:
       - ./media:/home/moscow_clock/media
+    healthcheck:
+      <<: *default-healthcheck
+      test: [ "CMD", "curl", "-f", "http://localhost:8000" ]
     <<: *defaults
