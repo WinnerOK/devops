@@ -10,9 +10,13 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: "738c174"
 
+preDownload:
+  url: "http://info.cern.ch"
+
 volumes:
   configPath: "/etc/config"
   visits: "/home/moscow_clock/media"
+  preDownload: "/home/moscow_clock/preDownload"
 
 imagePullSecrets: []
 nameOverride: ""

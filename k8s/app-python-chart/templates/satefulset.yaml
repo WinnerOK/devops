@@ -29,6 +29,17 @@ spec:
       serviceAccountName: {{ include "app-python-chart.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      initContainers:
+        - name: pre-download
+          image: busybox
+          command:
+            - wget
+            - "-O"
+            - "/preDownload/index.html"
+            - {{ .Values.preDownload.url }}
+          volumeMounts:
+            - name: pre-download
+              mountPath: "/preDownload"
       containers:
         - name: {{ .Chart.Name }}
           securityContext:
@@ -61,10 +72,14 @@ spec:
               readOnly: true
             - name: visits
               mountPath: {{ .Values.volumes.visits }}
+            - name: pre-download
+              mountPath: {{ .Values.volumes.preDownload }}
       volumes:
         - name: config
           configMap:
             name: {{ include "app-python-chart.fullname" . }}
+        - name: pre-download
+          emptyDir: {}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
