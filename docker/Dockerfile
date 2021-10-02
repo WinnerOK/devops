@@ -23,10 +23,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && apt-get autoclean && apt-get autoremove && \
   adduser --disabled-password --shell /bin/sh --home /home/moscow_clock moscow_clock
 
-EXPOSE 8000/tcp
-# Heathcheck is required to return 0 or 1
-HEALTHCHECK CMD curl -f http://localhost:8000/ || exit 1
-
 # Install Poetry
 RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | POETRY_HOME=/opt/poetry python && \
     cd /usr/local/bin && \
